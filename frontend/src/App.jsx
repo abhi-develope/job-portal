@@ -5,6 +5,7 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 
 
+
 const App = () => {
    const appRouter = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const App = () => {
   return (
     <div>
       <RouterProvider router={appRouter}/>
+      
     </div>
   )
 }

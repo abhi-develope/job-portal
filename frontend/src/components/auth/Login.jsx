@@ -4,9 +4,9 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import axios from 'axios';
-import { toast } from 'sonner';
 import { USER_API_END_POINT } from '../utils/constant';
 import { Button } from '../ui/button';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {

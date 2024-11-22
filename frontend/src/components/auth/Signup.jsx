@@ -6,9 +6,9 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { RadioGroup } from '../ui/radio-group';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constant';
+import toast from 'react-hot-toast';
 
 
 const Signup = () => {
@@ -68,11 +68,11 @@ const Signup = () => {
         });
   
         if (res.data.success) {
-            console.log(res.data.success);
+            
             
           navigate("/");
-          toast.success(res.data.message);
-          console.log(res.data.message);
+          toast.success(res.data.message || 'Signup successful!');
+          
           
         }
       } catch (error) {
