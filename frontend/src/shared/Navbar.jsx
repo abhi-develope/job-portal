@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
 import { PopoverContent } from '@radix-ui/react-popover'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const user = false;
@@ -21,8 +22,8 @@ const Navbar = () => {
       {
         !user?(
            <div className='flex gap-1'>
-             <Button variant='secondary'>Signup</Button>
-             <Button variant='outline'>Login</Button>
+             <Link to='/signup'><Button variant='secondary'>Signup</Button></Link>
+             <Link to='login'><Button variant='outline'>Login</Button></Link>
            </div>
         ):( <Popover >
             <PopoverTrigger asChild >

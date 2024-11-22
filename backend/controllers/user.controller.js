@@ -5,6 +5,10 @@ import bcrypt from "bcrypt"
 export const signup = async (req, res)=> {
     try {
         const {name, email, password, role, phone} = req.body;
+        console.log(name, email, password, role, phone);
+        
+        
+        
         if(!name || !email || !password || !role || !phone){
            return res.status(400).json({message: "all fields are required", success: false})
         }
@@ -23,6 +27,8 @@ export const signup = async (req, res)=> {
             phone,
             role
         })
+
+        
 
         await user.save();
         generateTokenAndCookie(res, user._id);
@@ -46,7 +52,7 @@ export const login = async (req, res)=>{
     try {
         const {email, password, role} = req.body;
         const user = await User.findOne({email});
-        const isPassword = bcrypt.compare(password, user.password);
+        const isPassword = await bcrypt.compare(password, user.password);
         if(!user || !isPassword){
             return res.status(400).json({message: "invalid user credential", success:false});
         

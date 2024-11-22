@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         resume: {type: String}, // url to resume
         resumeOriginalName: {type: String},
         company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
-        profilePhoto: {
+        profilePicture: {
             type: String,
             default: ""
         }

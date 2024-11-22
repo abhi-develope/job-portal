@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from './shared/Navbar'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './components/auth/Home'
 import Login from './components/auth/Login'

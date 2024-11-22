@@ -1,0 +1,36 @@
+const handleSubmit = (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData.entries());
+          
+          console.log(data);
+          
+      
+          // Add password confirmation logic
+          if (data.password !== data.confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+          }
+      
+          try {
+            const res = axios.post(`${USER_API_END_POINT}/signup`, data, {
+                headers:{
+                    "Content-Type": "multipart/form-data",
+                },
+                withCredentials: true,
+
+            })
+            console.log(res);
+            
+            if(res.data.success){
+                navigate("/");
+                toast.data.success(res.data.response.message);
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Something went wrong!";
+            console.error(error);
+            toast.error(errorMessage);
+            
+            
+        }
+        }
