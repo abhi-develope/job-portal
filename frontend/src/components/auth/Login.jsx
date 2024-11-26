@@ -1,133 +1,158 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
-import axios from 'axios';
-import { USER_API_END_POINT } from '../utils/constant';
-import { Button } from '../ui/button';
-import toast from 'react-hot-toast';
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constant";
+import { Button } from "../ui/button";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
-    const navigate = useNavigate();
-  
-    const [input, setInput] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      role: "",
-      file: null,
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector(store => store.auth);
+
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    role: "",
+    file: null,
+  });
+
+  const changeEventHandler = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
     });
-    
-    
-  
-    const changeEventHandler = (e) => {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("email", input.email);
+    formData.append("password", input.password);
+    formData.append("role", input.role);
+
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
       });
-    };
-  
-   
-        
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      const formData = new FormData();
-      
-      formData.append("email", input.email);
-      formData.append("password", input.password);
-      formData.append("role", input.role);
-     
-      try {
-        const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
-  
-        if (res.data.success) {
-            
-            
-          navigate("/");
-          toast.success(res.data.message);
-          
-          
-        }
-      } catch (error) {
-        console.error(error);
-        const errorMessage = error.response?.data?.message || "Something went wrong!";
-        toast.error(errorMessage);
+
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
       }
-    };
-   
+    } catch (error) {
+      console.error(error);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return (
-    
     <div>
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 space-y-4 bg-gray-50 rounded-lg shadow" encType="multipart/form-data">
-      <h2 className="text-xl font-bold text-center">Login Form</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto p-4 space-y-4 bg-gray-50 rounded-lg shadow"
+        encType="multipart/form-data"
+      >
+        <h2 className="text-xl font-bold text-center">Login Form</h2>
 
-      
-      {/* email */}
-      <div className="space-y-1">
-        <Label htmlFor="email">email</Label>
-        <Input type="email" name="email" value={input.email} onChange={changeEventHandler}  placeholder="Enter email" required />
-      </div>
+        {/* email */}
+        <div className="space-y-1">
+          <Label htmlFor="email">email</Label>
+          <Input
+            type="email"
+            name="email"
+            value={input.email}
+            onChange={changeEventHandler}
+            placeholder="Enter email"
+            required
+          />
+        </div>
 
-     {/* Password */}
-     <div className="space-y-1">
-        <Label >Password</Label>
-        <Input type="password" name="password"  value={input.password} onChange={changeEventHandler} placeholder="Enter your password" required />
-      </div>
+        {/* Password */}
+        <div className="space-y-1">
+          <Label>Password</Label>
+          <Input
+            type="password"
+            name="password"
+            value={input.password}
+            onChange={changeEventHandler}
+            placeholder="Enter your password"
+            required
+          />
+        </div>
 
-      {/* User Role (Radio Group) */}
-      <div className="space-y-1">
-        <Label>User Role</Label>
-        <RadioGroup defaultValue="student" name="student" className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <input type="radio" 
-               name='role'
-               value='student'
-               checked={input.role == 'student'}
-               onChange={changeEventHandler}
-               className='cursor-pointer'
-            />
-             <Label >Student</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type='radio'name='role'
-               value='recruiter'
-               checked={input.role == 'recruiter'}
-               onChange={changeEventHandler}
-               className='cursor-pointer' />
-            <Label htmlFor="user">Recruiter</Label>
-          </div>
-        </RadioGroup>
-      </div>
+        {/* User Role (Radio Group) */}
+        <div className="space-y-1">
+          <Label>User Role</Label>
+          <RadioGroup
+            defaultValue="student"
+            name="student"
+            className="space-y-2"
+          >
+            <div className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="role"
+                value="student"
+                checked={input.role == "student"}
+                onChange={changeEventHandler}
+                className="cursor-pointer"
+              />
+              <Label>Student</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="role"
+                value="recruiter"
+                checked={input.role == "recruiter"}
+                onChange={changeEventHandler}
+                className="cursor-pointer"
+              />
+              <Label htmlFor="user">Recruiter</Label>
+            </div>
+          </RadioGroup>
+        </div>
 
-      
+        {/* Submit Button */}
+        {loading ? (
+          <Button className="w-full">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            please wait
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full">
+            Login
+          </Button>
+        )}
 
-      
-
-      
-
-      {/* Submit Button */}
-      <Button type="submit" className="w-full">
-        Login
-      </Button>
-      <p className='text-sm text-slate-500'>Don't have account ? <span className='text-sm underline'><Link to='/signup'>Signup</Link></span></p>
-    </form>
- 
-
+        <p className="text-sm text-slate-500">
+          Don't have account ?{" "}
+          <span className="text-sm underline">
+            <Link to="/signup">Signup</Link>
+          </span>
+        </p>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
-
-
+export default Login;

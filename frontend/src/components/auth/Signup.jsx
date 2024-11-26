@@ -9,10 +9,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constant';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Signup = () => {
     const navigate = useNavigate();
+    const {loading} = useSelector(store=>store.auth)
+    const dispatch = useDispatch();
   
     const [input, setInput] = useState({
       name: "",
@@ -60,6 +63,7 @@ const Signup = () => {
       }
   
       try {
+        dispatch(setLoading(true));
         const res = await axios.post(`${USER_API_END_POINT}/signup`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -79,6 +83,8 @@ const Signup = () => {
         console.error(error);
         const errorMessage = error.response?.data?.message || "Something went wrong!";
         toast.error(errorMessage);
+      } finally{
+        dispatch(setLoading(false));
       }
     };
    
@@ -150,9 +156,16 @@ const Signup = () => {
       </div>
 
       {/* Submit Button */}
-      <Button type="submit" className="w-full">
-        Sign Up
-      </Button>
+      {loading ? (
+          <Button className="w-full">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            please wait
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full">
+            Signup
+          </Button>
+        )}
       <p className='text-sm text-slate-500'>already have an account ? <span className='text-sm underline'><Link to='/login'>Login</Link></span></p>
     </form>
  
