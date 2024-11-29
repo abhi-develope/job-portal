@@ -4,6 +4,7 @@ import Home from './components/auth/Home'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Jobs from './components/pages/Jobs'
+import Profile from './components/pages/Profile'
 
 
 
@@ -24,7 +25,11 @@ const App = () => {
     {
       path: '/jobs',
       element: <Jobs/>
-    }
+    },
+    {
+      path: '/profile',
+      element: <Profile/>
+    },
    ])
   return (
     <div>

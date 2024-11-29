@@ -43,7 +43,7 @@ const Navbar = () => {
           <p className='p-2 -mt-3 text-sm text-gray-500 pr-4'>Lorem ipsum, dolor sit amet consectetur</p>
          
          <div className='pl-3'>
-         <Button variant="link"><CircleUser/>View Profile</Button>
+         <Button variant="link"><CircleUser/><Link to='/profile'>View Profile</Link></Button>
          <Button variant="link" className='mt-[-13px]'><LogOut/>logout</Button>
          </div>
          </div>
