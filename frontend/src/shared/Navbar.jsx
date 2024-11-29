@@ -2,11 +2,13 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
 import { PopoverContent } from '@radix-ui/react-popover'
+import { CircleUser, LogOut} from 'lucide-react'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-    const user = false;
+    const {user} = useSelector(store => store.auth)
   return (
     <>
     <div  className='flex items-center justify-between gap-5 mx-auto max-w-7xl h-16'>
@@ -33,19 +35,19 @@ const Navbar = () => {
             
           </Avatar>
             </PopoverTrigger>
-            <PopoverContent className="w-40 mr-5 pl-2 py-1">
-             <div className='flex gap-1'>
-             <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          </Avatar>
+            <PopoverContent >
+            
       
-          <h3>Hi! Abhishek Prajapati</h3>
+          <div className='rounded-md shadow-lg z-10 bg-slate-300 '>
+          <h3 className='p-1'>Hi! Abhishek Prajapati</h3>
+          <p className='p-2 -mt-3 text-sm text-gray-500 pr-4'>Lorem ipsum, dolor sit amet consectetur</p>
          
-             </div>
-             <div className='pl-3'>
-             <Button variant="link">View Profile</Button>
-             <Button variant="link" className='mt-[-13px]'>logout</Button>
-             </div>
+         <div className='pl-3'>
+         <Button variant="link"><CircleUser/>View Profile</Button>
+         <Button variant="link" className='mt-[-13px]'><LogOut/>logout</Button>
+         </div>
+         </div>
+          
             </PopoverContent>
           </Popover>)
       }  
