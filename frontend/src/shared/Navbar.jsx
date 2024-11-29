@@ -24,7 +24,7 @@ const Navbar = () => {
         !user?(
            <div className='flex gap-1'>
              <Link to='/signup'><Button variant='secondary'>Signup</Button></Link>
-             <Link to='login'><Button variant='outline'>Login</Button></Link>
+             <Link to='/login'><Button variant='outline'>Login</Button></Link>
            </div>
         ):( <Popover >
             <PopoverTrigger asChild >

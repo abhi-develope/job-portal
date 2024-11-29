@@ -10,6 +10,8 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constant';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '../redux/authSlice';
+import { Loader2 } from 'lucide-react';
 
 
 const Signup = () => {
@@ -166,7 +168,7 @@ const Signup = () => {
             Signup
           </Button>
         )}
-      <p className='text-sm text-slate-500'>already have an account ? <span className='text-sm underline'><Link to='/login'>Login</Link></span></p>
+      <p className='text-sm text-slate-500'>already have an account ? <span className='text-sm underline text-blue-500'><Link to='/login'>Login</Link></span></p>
     </form>
  
 
