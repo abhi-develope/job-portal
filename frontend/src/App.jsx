@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './components/auth/Home'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
+import Jobs from './components/pages/Jobs'
 
 
 
@@ -19,6 +20,10 @@ const App = () => {
     {
       path: '/signup',
       element: <Signup/>
+    },
+    {
+      path: '/jobs',
+      element: <Jobs/>
     }
    ])
   return (
