@@ -1,13 +1,15 @@
 import Navbar from '@/shared/Navbar'
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Contact, FileDown, Mail, Pen } from 'lucide-react'
 import { Badge } from '../ui/badge'
 import AplliedTableJobs from './AplliedTableJobs'
+import UpdateDialogBox from './UpdateDialogBox'
   
 const skills = ["Html", "Css", "Javascript", "react"]
 const Profile = () => {
+    const [open, setOpen] = useState(false);
   return (
       <div>
         <Navbar/>
@@ -22,7 +24,7 @@ const Profile = () => {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, at!</p>
             </div>
             </div>
-            <Button variant='outline' className='text-right'><Pen/></Button>
+            <Button onClick={()=>setOpen(true)} variant='outline' className='text-right'><Pen/></Button>
             </div>
             <div className='my-5'>
                 <div className='flex gap-3 my-2'>
@@ -57,6 +59,7 @@ const Profile = () => {
             <h1 className='text-lg font-bold p-2'>Applied Jobs</h1>
             <AplliedTableJobs/>
         </div>
+        <UpdateDialogBox open={open} setOpen={setOpen}/>
       
     </div>
   )

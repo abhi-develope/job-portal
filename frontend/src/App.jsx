@@ -6,6 +6,7 @@ import Signup from './components/auth/Signup'
 import Jobs from './components/pages/Jobs'
 import Profile from './components/pages/Profile'
 import Jobdescription from './components/pages/Jobdescription'
+import Browse from './components/pages/Browse'
 
 
 
@@ -22,6 +23,10 @@ const App = () => {
     {
       path: '/signup',
       element: <Signup/>
+    },
+    {
+      path: '/browse',
+      element: <Browse/>
     },
     {
       path: '/jobs',
