@@ -5,6 +5,7 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Jobs from './components/pages/Jobs'
 import Profile from './components/pages/Profile'
+import Jobdescription from './components/pages/Jobdescription'
 
 
 
@@ -29,6 +30,10 @@ const App = () => {
     {
       path: '/profile',
       element: <Profile/>
+    },
+    {
+      path: '/description/:id',
+      element: <Jobdescription/>
     },
    ])
   return (

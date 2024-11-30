@@ -3,8 +3,11 @@ import { Button } from '../ui/button'
 import { Bookmark } from 'lucide-react'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Badge } from '../ui/badge'
+import { useNavigate } from 'react-router-dom'
 
+const jobId = 'asxcfvgt'
 const Job = () => {
+  const navigate = useNavigate()
   return (
     <div className='shadow-xl border border-gray-200 bg-white p-6 rounded-md'>
       <div className='flex items-center justify-between '>
@@ -33,7 +36,7 @@ const Job = () => {
         
       </div>
       <div className='mt-2'>
-        <Button  className='bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all'>Check Details</Button>
+        <Button onClick={()=>navigate(`/description/${jobId}`)}  className='bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all'>Check Details</Button>
       </div>
     </div>
   )
