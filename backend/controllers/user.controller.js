@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 export const signup = async (req, res)=> {
     try {
         const {name, email, password, role, phone} = req.body;
-        console.log(name, email, password, role, phone);
+       
         
         
         
@@ -99,11 +99,11 @@ export const profileUpdate = async (req, res) => {
           // If skills is already an array, use it as is
           skillsArray = skills;
         }
-    const userId = req.id // middleware authentication
-    const user = await User.findOne(userId);
+    const userId = req.userId // middleware authentication
+    const user = await User.findById(userId);
 
     if(!user){
-        res.status(400).json({message: "user not found", success: "false"})
+        res.status(400).json({message: "user not found", success: false})
     }
 
     //updating data
@@ -111,20 +111,24 @@ export const profileUpdate = async (req, res) => {
     if(phone)  user.phone = phone;
     if(email)  user.email = email;
     if(bio)  user.profile.bio = bio;
-    if(skills)  user.profile.skills = skillsArray;
+    if(skillsArray)  user.profile.skills = skillsArray;
    
 
 
     await user.save();
-    res.status(200).json({message: "user information updated successfully", 
+    res.status(200).json({message: "user information updated successfully", success:true, 
         user: {
             ...user._doc,
             password: undefined,
         },})
     
    } catch (error) {
+    console.error("Error in profileUpdate:", error);
+    
     res.status(400).json({error: error.message})
 
 }
    
 }
+
+

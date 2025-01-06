@@ -8,10 +8,13 @@ import companyRoutes from './routes/company.routes.js'
 import jobRoutes from './routes/job.routes.js'
 import applicationRoutes from './routes/application.route.js'
 
+
+
 dotenv.config();
 const app = express();
 
 // middleware---
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
     origin: "http://localhost:5173",
@@ -24,6 +27,7 @@ app.use('/api/auth', userRoute)
 app.use('/api/company', companyRoutes)
 app.use('/api/job', jobRoutes)
 app.use('/api/application', applicationRoutes)
+
 
 
 app.listen(port, ()=>{
