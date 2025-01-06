@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+ 
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_END_POINT } from "../utils/constant";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { setUser } from "../redux/authSlice";
 
 
 const UpdateDialogBox = ({ open, setOpen }) => {
     const [loading, setLoading] = useState(false)
     const {user} = useSelector(store=>store.auth)
+    const dispatch = useDispatch()
 
     const [input, setInput] = useState({
         name:user?.name,
@@ -24,20 +31,65 @@ const UpdateDialogBox = ({ open, setOpen }) => {
         file:user?.profile?.resume,
     })
 
-    const changeEventHandler = ()=>{
+    const changeEventHandler = (e)=>{
         setInput({...input,[e.target.name]:e.target.value})
+    }
+
+    const fileChangeHandler = (e)=>{
+        const file = e.target.file?.[0];
+        setInput({...input, file})
+    }
+
+    const submitHandler = async(e)=>{
+        e.preventDefault()
+        const formData = new FormData();
+        formData.append("name",input.name);
+        formData.append("email",input.email);
+        formData.append("phone",input.phone);
+        formData.append("bio",input.bio);
+        formData.append("skills",input.skills);
+        if(input.file){
+            formData.append("file", input.file)
+        }
+
+        try {
+            const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData,{
+                headers:{
+                    'Content-Type':'multipart/form-data'
+                },
+                withCredentials: true,
+            })
+            if(res.data.success){
+                dispatch(setUser(res.data.user))
+                toast.success(res.data.message)
+            }
+        } catch (error) {
+            console.error(error);
+            const errorMessage =
+              error.response?.data?.message || "Something went wrong!";
+            toast.error(errorMessage);
+            
+        }
+        setOpen(false);
+        console.log(input);
+        
     }
   return (
     <div>
-      <Dialog open={open}>
+      <Dialog open={open} onOpenChange={setOpen}>
+     
         <DialogContent
           className="sm:max-w-[425px]"
           onInteractOutside={() => setOpen(false)}
         >
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
+            <DialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </DialogDescription>
           </DialogHeader>
-          <form>
+          <form onSubmit={submitHandler}>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <label htmlFor="name">Name</label>
@@ -110,7 +162,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
                   type="file"
                   id="resume"
                   name="resume"
-                  value={input.file}
+                  onChange={fileChangeHandler}
                   accept="application/pdf"
                   className="col-span-3 w-full px-2 py-1 rounded-md"
                 />
