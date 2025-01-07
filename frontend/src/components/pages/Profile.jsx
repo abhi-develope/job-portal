@@ -6,9 +6,13 @@ import { Contact, FileDown, Mail, Pen } from 'lucide-react'
 import { Badge } from '../ui/badge'
 import AplliedTableJobs from './AplliedTableJobs'
 import UpdateDialogBox from './UpdateDialogBox'
+import { useSelector } from 'react-redux'
   
-const skills = ["Html", "Css", "Javascript", "react"]
+
 const Profile = () => {
+    const {user} = useSelector(store=>store.auth);
+    
+    
     const [open, setOpen] = useState(false);
   return (
       <div>
@@ -20,8 +24,8 @@ const Profile = () => {
                 <AvatarImage src='https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg'/>
             </Avatar>
             <div>
-                <h1 className='text-lg font-bold'>Full Name</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, at!</p>
+                <h1 className='text-lg font-bold'>{user?.name}</h1>
+                <p>{user?.profile?.bio}</p>
             </div>
             </div>
             <Button onClick={()=>setOpen(true)} variant='outline' className='text-right'><Pen/></Button>
@@ -29,12 +33,12 @@ const Profile = () => {
             <div className='my-5'>
                 <div className='flex gap-3 my-2'>
                     <Mail/>
-                    <span>prajapatiabhishek320@gmail.com</span>
+                    <span>{user?.email}</span>
 
                 </div>
                 <div className='flex gap-3 my-2'>
                     <Contact/>
-                    <span>8873645789</span>
+                    <span>{user?.phone}</span>
 
                 </div>
             </div>
@@ -42,7 +46,7 @@ const Profile = () => {
                 <p>Skills</p>
                 <div className='flex gap-2'>
                 {
-                    skills.length !== 0 ? skills.map((item, index)=>(
+                   user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index)=>(
                         <Badge key={index}>{item}</Badge>
                     )) : <p>NA</p>
                 }

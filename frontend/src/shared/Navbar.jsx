@@ -39,8 +39,8 @@ const Navbar = () => {
             
       
           <div className='rounded-md shadow-lg z-10 bg-slate-300 '>
-          <h3 className='p-1'>Hi! Abhishek Prajapati</h3>
-          <p className='p-2 -mt-3 text-sm text-gray-500 pr-4'>Lorem ipsum, dolor sit amet consectetur</p>
+          <h3 className='p-1'>{user?.name}</h3>
+          <p className='p-2 -mt-3 text-sm text-gray-500 pr-4'>{user?.profile?.bio}</p>
          
          <div className='pl-3'>
          <Button variant="link"><CircleUser/><Link to='/profile'>View Profile</Link></Button>
