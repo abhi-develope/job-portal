@@ -36,7 +36,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
     }
 
     const fileChangeHandler = (e)=>{
-        const file = e.target.file?.[0];
+        const file = e.target.files?.[0];
         setInput({...input, file})
     }
 
@@ -48,11 +48,11 @@ const UpdateDialogBox = ({ open, setOpen }) => {
         formData.append("phone",input.phone);
         formData.append("bio",input.bio);
         formData.append("skills",input.skills);
-        if(input.file){
-            formData.append("file", input.file)
+        if (input.file) {
+          formData.append("resume", input.file); // Make sure the field name matches Multer's configuration
         }
-
         try {
+          setLoading(true)
             const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData,{
                 headers:{
                     'Content-Type':'multipart/form-data'
@@ -69,9 +69,11 @@ const UpdateDialogBox = ({ open, setOpen }) => {
               error.response?.data?.message || "Something went wrong!";
             toast.error(errorMessage);
             
+        }finally{
+          setLoading(false)
         }
+        
         setOpen(false);
-        console.log(input);
         
     }
   return (

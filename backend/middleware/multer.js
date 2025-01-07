@@ -1,9 +1,4 @@
 import multer from "multer";
 
-const storage = multer.memoryStorage();
-
-// Middleware for handling multiple file fields
-export const multipleUploads = multer({ storage }).fields([
-  { name: "profilePicture", maxCount: 1 },
-  { name: "resume", maxCount: 1 },
-]);
+const storage = multer.memoryStorage(); // Store file in memory buffer
+export const upload = multer({ storage }).single("resume"); // 'resume' is the field name

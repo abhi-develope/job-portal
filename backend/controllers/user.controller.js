@@ -1,4 +1,6 @@
 import { User } from "../models/user.model.js";
+import cloudinary from "../utils/cloudinary.js";
+import getDataUri from "../utils/datauri.js";
 import { generateTokenAndCookie } from "../utils/jwtToken.js";
 import bcrypt from "bcrypt"
 
@@ -63,7 +65,7 @@ export const login = async (req, res)=>{
 
         await user.save();
         generateTokenAndCookie(res, user._id);
-        res.status(200).json({message: "logged in  successfully", success:true,
+        res.status(200).json({message: "logged in  successfully", success:true, 
             user: {
                 ...user._doc,
                 password: undefined,
@@ -89,6 +91,15 @@ export const logout = async  (req, res)=>{
 export const profileUpdate = async (req, res) => {
    try {
     const {name, email, bio, skills, phone} = req.body;
+    const file = req.file;
+    if (!file) {
+        return res.status(400).json({
+            success: false,
+            message: "No file uploaded. Please provide a valid file.",
+        });
+    }
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
    
     let skillsArray;
    
@@ -112,6 +123,11 @@ export const profileUpdate = async (req, res) => {
     if(email)  user.email = email;
     if(bio)  user.profile.bio = bio;
     if(skillsArray)  user.profile.skills = skillsArray;
+
+    if(cloudResponse){
+        user.profile.resume = cloudResponse.secure_url  // save the cloudaniry url
+        user.profile.resumeOriginalName = file.originalname
+    }
    
 
 

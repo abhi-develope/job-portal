@@ -55,7 +55,7 @@ const Profile = () => {
             <div>
                 <h1 className='font-bold'>Resume</h1>
 
-               <a href="https://google.com" target='blank'> <FileDown/>resume.pdf</a>
+               <a href="https://google.com" target='blank'className='underline text-blue-400 '> <FileDown/>{user?.profile?.resumeOriginalName}</a>
             </div>
         </div>
 
