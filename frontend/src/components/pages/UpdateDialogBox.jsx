@@ -64,7 +64,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
                 toast.success(res.data.message)
             }
         } catch (error) {
-            console.error(error);
+            
             const errorMessage =
               error.response?.data?.message || "Something went wrong!";
             toast.error(errorMessage);

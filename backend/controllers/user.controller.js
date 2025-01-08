@@ -139,7 +139,7 @@ export const profileUpdate = async (req, res) => {
         },})
     
    } catch (error) {
-    console.error("Error in profileUpdate:", error);
+    
     
     res.status(400).json({error: error.message})
 

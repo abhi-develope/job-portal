@@ -55,7 +55,7 @@ const Profile = () => {
             <div>
                 <h1 className='font-bold'>Resume</h1>
 
-               <a href="https://google.com" target='blank'className='underline text-blue-400 '> <FileDown/>{user?.profile?.resumeOriginalName}</a>
+               <a href={user?.profile?.resume} target='_blank' rel="noopener noreferrer"> <FileDown/><p className='underline text-blue-400 '>{user?.profile?.resumeOriginalName}</p></a>
             </div>
         </div>
 
