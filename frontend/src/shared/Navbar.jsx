@@ -1,14 +1,37 @@
+import { setUser } from '@/components/redux/authSlice'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
+import { USER_API_END_POINT } from '@/components/utils/constant'
 import { PopoverContent } from '@radix-ui/react-popover'
+import axios from 'axios'
 import { CircleUser, LogOut} from 'lucide-react'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
     const {user} = useSelector(store => store.auth)
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    const logoutHandler = async () =>{
+      
+     try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {withCredentials:true})
+      if(res.data.success){
+        dispatch(setUser(null))
+        navigate('/')
+        toast.success(res.data.message)
+      }
+     } catch (error) {
+         console.log(error);
+         toast.error(error.response.data.message)
+         
+     }
+
+    }
   return (
     <>
     <div  className='flex items-center justify-between gap-5 mx-auto max-w-7xl h-16'>
@@ -44,7 +67,7 @@ const Navbar = () => {
          
          <div className='pl-3'>
          <Button variant="link"><CircleUser/><Link to='/profile'>View Profile</Link></Button>
-         <Button variant="link" className='mt-[-13px]'><LogOut/>logout</Button>
+         <Button onClick={logoutHandler} variant="link" className='mt-[-13px]'><LogOut/>logout</Button>
          </div>
          </div>
           

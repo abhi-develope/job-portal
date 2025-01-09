@@ -76,14 +76,19 @@ export const login = async (req, res)=>{
 
     } catch (error) {
         res.status(400).json({error: error.message})
+
     
     }
 }
 
 
 export const logout = async  (req, res)=>{
+   try {
     res.clearCookie("jobToken")
-    res.status(200).json({message: "loggout successfully"});
+    res.status(200).json({message: "loggout successfully", success:true});
+   } catch (error) {
+    res.status(400).json({error: error.message})
+   }
 }
 
 
