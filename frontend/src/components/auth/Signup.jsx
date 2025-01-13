@@ -10,7 +10,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constant';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../redux/authSlice';
+import { setLoading, setUser } from '../redux/authSlice';
 import { Loader2 } from 'lucide-react';
 
 
@@ -29,7 +29,7 @@ const Signup = () => {
       file: null,
     });
     
-    const [file, setFile] = useState(null);
+    // const [file, setFile] = useState(null);
     
   
     const changeEventHandler = (e) => {
@@ -40,9 +40,11 @@ const Signup = () => {
     };
   
    
-        const changeFileHandler = (e) => {
-            setFile(e.target.files?.[0] || null);
-          };
+    const changeFileHandler = (e)=>{
+      const file = e.target.files?.[0];
+      setInput({ ...input, file })
+  }
+
     
   
     const handleSubmit = async (e) => {
@@ -75,7 +77,7 @@ const Signup = () => {
   
         if (res.data.success) {
             
-            
+          dispatch(setUser(res.data.user)) 
           navigate("/");
           toast.success(res.data.message || 'Signup successful!');
           
@@ -154,7 +156,7 @@ const Signup = () => {
       {/* File Upload */}
       <div className="space-y-1">
         <Label >Upload Profile Picture</Label>
-        <Input accept='image/*' type="file" name="profilePicture"  onChange={changeFileHandler}  />
+        <Input accept='image/*' type="file" name='file'   onChange={changeFileHandler}  />
       </div>
 
       {/* Submit Button */}

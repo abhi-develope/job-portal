@@ -19,7 +19,7 @@ const Jobs = () => {
          <div className='grid grid-cols-3 gap-4'>
          {
              jobArray.map((job, index)=>(
-              <Job/>
+              <Job key={index}/>
             ))
           }
 

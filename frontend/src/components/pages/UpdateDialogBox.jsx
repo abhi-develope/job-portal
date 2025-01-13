@@ -49,7 +49,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
         formData.append("bio",input.bio);
         formData.append("skills",input.skills);
         if (input.file) {
-          formData.append("resume", input.file); // Make sure the field name matches Multer's configuration
+          formData.append("file", input.file); // Make sure the field name matches Multer's configuration
         }
         try {
           setLoading(true)
@@ -87,8 +87,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
             <DialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+            Keeping your profile up-to-date ensures a better experience and helps others learn more about you.
       </DialogDescription>
           </DialogHeader>
           <form onSubmit={submitHandler}>
@@ -163,7 +162,7 @@ const UpdateDialogBox = ({ open, setOpen }) => {
                 <input
                   type="file"
                   id="resume"
-                  name="resume"
+                  name="file"
                   onChange={fileChangeHandler}
                   accept="application/pdf"
                   className="col-span-3 w-full px-2 py-1 rounded-md"

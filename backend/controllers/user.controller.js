@@ -22,12 +22,24 @@ export const signup = async (req, res)=> {
 
         const hashPassword = await bcrypt.hash(password, 10);
 
+        //cloudinary
+
+        const file = req.file;
+        if (!file) {
+            return res.status(400).json({ success: false, message: "File upload is required" });
+          }
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+
         const user = new User({
             name,
             email,
             password: hashPassword,
             phone,
-            role
+            role,
+            profile:{
+                profilePicture: cloudResponse.secure_url
+            }
         })
 
         

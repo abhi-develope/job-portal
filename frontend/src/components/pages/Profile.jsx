@@ -14,6 +14,8 @@ const Profile = () => {
     
     
     const [open, setOpen] = useState(false);
+   
+    
   return (
       <div>
         <Navbar/>
@@ -21,7 +23,7 @@ const Profile = () => {
             <div className='flex justify-between'>
             <div className='flex gap-4 items-center'>
             <Avatar className='h-24 w-24'>
-                <AvatarImage src='https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg'/>
+                <AvatarImage src={user?.profile?.profilePicture}/>
             </Avatar>
             <div>
                 <h1 className='text-lg font-bold'>{user?.name}</h1>
