@@ -13,9 +13,9 @@ const Jobcard = ({job}) => {
         <p className='text-sm text-gray-500'>{job?.description}</p>
       </div>
       <div className='flex gap-2 items-center mt-4'>
-        <Badge className={'text-blue-700 font-bold '} variant="ghost">{job?.position}Position</Badge>
+        <Badge className={'text-blue-700 font-bold '} variant="ghost">{job?.position} Position</Badge>
         <Badge className={'text-red-600 font-bold '} variant="ghost">{job?.jobType}</Badge>
-        <Badge className={'text-purple-800 font-bold '} variant="ghost">{job?.salary}LPA</Badge>
+        <Badge className={'text-purple-800 font-bold '} variant="ghost">{job?.salary} LPA</Badge>
         
         
       </div>
