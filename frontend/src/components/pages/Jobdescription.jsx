@@ -14,7 +14,7 @@ const Jobdescription = () => {
   const dispatch = useDispatch()
   const {singleJob} = useSelector(store=>store.jobs)
   const user = useSelector(store=>store.auth)
-  const initialApplied = singleJob?.applications?.some(application=>application.applicant == user?._id) || false;
+  const initialApplied = singleJob?.applications?.some(application=>application.applicant === user?._id) || false;
   const [isApplied, setIsApplied] = useState(initialApplied)
 
 
@@ -24,6 +24,7 @@ const Jobdescription = () => {
           const res = await axios.get(`${JOB_API_END_POINT}/jobsById/${jobId}`, {withCredentials:true}) 
           if(res.data.success){
               dispatch(setSingleJob(res.data.job))
+             
               setIsApplied(res.data.job.applications.some(application=>application.applicant === user?._id))   // ensuure it is sync with fetch data or not
           } 
         } catch (error) {

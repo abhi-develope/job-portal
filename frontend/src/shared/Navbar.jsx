@@ -40,9 +40,21 @@ const Navbar = () => {
     </div>
     <div>
       <ul className='flex gap-5 items-center font-medium'>
-        <li><Link to='/'>Home</Link></li>
+        {
+          user && user.role === "recruiter" ? (
+            <>
+             <li><Link to='/getCompany'>Companies</Link></li>
+             <li><Link to='/adminJobs'>Jobs</Link></li>
+            </>
+          ):(
+            <>
+             <li><Link to='/'>Home</Link></li>
         <li><Link to='/jobs'>Jobs</Link></li>
         <li><Link to='/browse'>Browse</Link></li>
+       
+            </>
+          )
+        }
        
 
       {
@@ -66,7 +78,9 @@ const Navbar = () => {
           <p className='p-2 -mt-3 text-sm text-gray-500 pr-4'>{user?.profile?.bio}</p>
          
          <div className='pl-3'>
-         <Button variant="link"><CircleUser/><Link to='/profile'>View Profile</Link></Button>
+         {
+          user && user.role === "student" &&  (<Button variant="link"><CircleUser/><Link to='/profile'>View Profile</Link></Button>)
+         }
          <Button onClick={logoutHandler} variant="link" className='mt-[-13px]'><LogOut/>logout</Button>
          </div>
          </div>
