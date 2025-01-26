@@ -7,6 +7,7 @@ import Jobs from './components/pages/Jobs'
 import Profile from './components/pages/Profile'
 import Jobdescription from './components/pages/Jobdescription'
 import Browse from './components/pages/Browse'
+import Company from './components/admin/Company'
 
 
 
@@ -39,6 +40,12 @@ const App = () => {
     {
       path: '/description/:id',
       element: <Jobdescription/>
+    },
+
+    // admin paths
+    {
+      path: '/admin/getCompany',
+      element: <Company/>
     },
    ])
   return (

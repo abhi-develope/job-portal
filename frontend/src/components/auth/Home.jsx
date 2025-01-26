@@ -1,13 +1,23 @@
 import Navbar from '@/shared/Navbar'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Herosection from '../Herosection'
 import CategoryCrousel from '../CategoryCrousel'
 import LatestJobs from '../LatestJobs'
 import Footer from '../Footer'
 import useGetAllJobs from '@/hooks/useGetAllJobs'
+import { useSelector } from 'react-redux'
+
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   useGetAllJobs();
+  const {user} = useSelector(store => store.auth)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(user?.role === "recruiter"){
+      navigate('/admin/getCompany')
+    }
+  }, []);
   return (
     <div>
       <Navbar/>
